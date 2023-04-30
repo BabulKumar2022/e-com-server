@@ -4,7 +4,8 @@ import { createCategoryController,
      updateCategoryController,
       getCategoryController,
       singleCategoryController,
-      deleteCategoryController
+      deleteCategoryController,
+
      } from '../controllers/categoryController.js';
 
   
@@ -27,6 +28,7 @@ router.get('/single-category/:slug', singleCategoryController)
 
 //routes for delete single category
 router.delete('/delete-category/:id', requireSignIn, isAdmin, deleteCategoryController)
+
 
 
 export default router; 
