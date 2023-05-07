@@ -4,8 +4,13 @@ import fs from 'fs';
 import slugify from 'slugify';
 
 
- 
-//========create==product===========
+  
+
+
+
+
+
+//========create==product================
 
 export const createProductController = async(req, res)=>{
     try {
@@ -260,7 +265,7 @@ export const searchProductController = async(req, res)=>{
     }
 }
 //============ similar product get function=============
-
+  
 export const relatedProductController = async (req, res) =>{
     try {
         const {pid, cid} = req.params;
@@ -301,4 +306,45 @@ export const productCategoryController = async(req, res)=>{
         })
         
     }
+}
+
+// payment gateway api=============
+//token
+export const braintreeTokenController =async () =>{
+   try {
+    gateway.clientToken.generate({}, function(err, response){
+        if(err){
+            res.status(500).send(err)
+        }else{
+            res.send(response)
+        }
+    }
+   
+    )
+   } catch (error) {
+    console.log(error)
+    
+   }
+
+}
+ //payment
+export const braintreePaymentController = async()=>{
+try {
+    const {cart, nonce} = req.body
+    let total = 0
+    cart.map(i => {total += i.price
+    })
+    let newTransaction = gateway.transaction.sale({
+        amount: total,
+        paymentMethodNonce: nonce,
+        Options:{
+            submitForSettlement: true
+        }
+    }
+   
+    )
+} catch (error) {
+    console.log(error)
+    
+}
 }
